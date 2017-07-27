@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>App</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all' %>
+  </head>
+
+  <body>
+    <% if user_signed_in? %>
+    <nav class="navbar">
+      <%= active_link_to posts_path, class: "navbar-item", class_active: "is-active", active: :exact do %>
+	Last videos
+      <% end %>
+
+      <%= active_link_to posts_path(sort: :likes), class: "navbar-item", class_active: "is-active", active: :exact do %>
+	Best rated
+      <% end %>
+      
+      <%= active_link_to posts_path(owner_id: current_user.id), class: "navbar-item", class_active: "is-active", active: :exact do %>
+	My videos
+      <% end %>
+
+      <div class="navbar-end">
+	<%= active_link_to(edit_user_registration_path, class: "navbar-item", class_active: "is-active") do %>
+	<%= current_user.username %>
+	<%= image_tag current_user.avatar_url, alt: current_user.username, class: "navbar-avatar" %>
+	<% end %>
+	<div class="navbar-item">
+	  <p class="control">
+	    <%= active_link_to new_post_path, class: "button is-primary", class_active: "is-active" do %>
+	    <span class="icon is-small">
+	      <i class="fa fa-upload"></i>
+	    </span>
+	    <span>Upload</span>
+	    <% end %>
+	  </p>
+	</div>
+      </div>
+    </nav>
+    <% end %>
+
+    <% if notice %>
+    <div class="notification is-success">
+      <%= notice %>
+    </div>
+    <% end %>
+    <% if alert %>
+    <div class="notification is-danger">
+      <%= alert %>
+    </div>
+    <% end %>
+
+    <section class="section">
+      <main class="container is-fullhd">
+	<%= yield %>
+      </main>
+    </section>
+  </body>
+</html>

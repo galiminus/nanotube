@@ -1,0 +1,38 @@
+<div class="columns">
+  <div class="column is-6 is-offset-3">
+    <form name="upload" method="POST" enctype="multipart/form-data" action="/upload">
+      <div class="card">
+	<%= error_messages_for(@post) %>
+	<div class="card-content">
+	  <div class="content">
+
+	    <div class="field">
+	      <label class="label" for="title">Title</label>
+	      <div class="control">
+		<input class="input" type="text" name="title" id="title" />
+	      </div>
+	    </div>
+
+	    <div class="field">
+	      <label class="label" for="title">Video</label>
+	      <div class="control">
+		<input type="file" name="file" id="file">
+	      </div>
+	    </div>
+	    
+	  </div>
+	</div>
+	<footer class="card-footer">
+	  <p class="card-footer-item has-text-right">
+	    <button type="submit" name="submit" class="button is-primary">
+	      <span class="icon is-small">
+		<i class="fa fa-upload"></i>
+	      </span>
+	      <span>Upload</span>
+	    </button>
+	  </p>
+	</footer>
+      </div>
+    </form>
+  </div>
+</div>

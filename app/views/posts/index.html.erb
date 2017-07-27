@@ -1,0 +1,29 @@
+<div class="columns is-multiline">
+  <% @posts.each do |post| %>
+  <div class="column is-one-third">
+    <div class="card">
+      <% if post.built? && post.thumbnail.present? %>
+      <div class="card-image">
+	<figure class="image is-4by3">
+	  <%= link_to post do %>
+	  <img src="<%= thumbnail_path(post) %>" alt="Image">
+	  <% end %>
+	</figure>
+      </div>
+      <% else %>
+      <div class="card-image">
+	<figure class="image is-4by3">
+	  <%= link_to post do %>
+	  <%= image_tag "waiting_transcoding.png", alt: "Waiting transcoding" %>
+	  <% end %>
+	</figure>
+      </div>
+      <% end %>
+      <%= render partial: "posts/card_content", locals: { post: post } %>
+    </div>
+  </div>
+  <% end %>
+</div>
+
+<%= paginate @posts %>
+

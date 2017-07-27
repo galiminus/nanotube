@@ -1,0 +1,7 @@
+<div class="columns">
+  <div class="column">
+    <video src="<%= video_path(@post) %>" controls="controls" autoplay="autoplay"></video>
+
+    <%= render partial: "posts/card_content", locals: { post: @post } %>
+  </div>
+</div>
