@@ -4,6 +4,8 @@ namespace :videos do
 
     Post.where(state: "enqueued").order(created_at: :asc).each do |post|
       begin
+        next if post.reload.state != "enqueued"
+        
         post.start_building!
         
         name = "#{post.name.gsub(/\.[^\.]+$/, '').parameterize.underscore}-#{SecureRandom.uuid}.mp4"

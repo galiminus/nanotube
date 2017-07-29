@@ -2,13 +2,18 @@ class Post < ApplicationRecord
   include AASM
 
   acts_as_votable
+  acts_as_taggable
   
   belongs_to :owner, class_name: "User"
 
+  has_many :comments
+  
   validates_format_of :content_type, with: /video\/./
-  validates :md5, uniqueness: true
+#  validates :md5, uniqueness: true
   validates :path, presence: true
 
+  before_save :update_tag_list
+  
   aasm column: 'state' do
 
     state :enqueued, initial: true
@@ -32,5 +37,11 @@ class Post < ApplicationRecord
       transitions from: :building, to: :built
     end
 
+  end
+
+  protected
+
+  def update_tag_list
+    self.tag_list = String(description).scan(/#([[:alnum:]]+)/).flatten
   end
 end

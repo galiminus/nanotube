@@ -53,5 +53,20 @@ html, body {
   .navbar-avatar {
       margin-left: 12px;
   }
+  .search-item {
+      flex: 1;
+      form {
+	  width: 100%;
+	  .control {
+	      display: flex;
+	      input {
+		  max-width: 400px;
+	      }
+	      button {
+		  margin-left: 4px;
+	      }
+	  }
+      }
+  }
 }
 

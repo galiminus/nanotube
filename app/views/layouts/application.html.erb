@@ -1,9 +1,32 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>App</title>
+    <title>Nanotube</title>
     <%= csrf_meta_tags %>
 
+    <meta content='width=device-width, initial-scale=1' name='viewport'>
+    <% if @refresh_interval.present? %>
+    <meta http-equiv="refresh" content="<%= @refresh_interval %>">
+    <% end %>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="<%= image_path('apple-icon-57x57.png') %>">
+    <link rel="apple-touch-icon" sizes="60x60" href="<%= image_path('apple-icon-60x60.png') %>">
+    <link rel="apple-touch-icon" sizes="72x72" href="<%= image_path('apple-icon-72x72.png') %>">
+    <link rel="apple-touch-icon" sizes="76x76" href="<%= image_path('apple-icon-76x76.png') %>">
+    <link rel="apple-touch-icon" sizes="114x114" href="<%= image_path('apple-icon-114x114.png') %>">
+    <link rel="apple-touch-icon" sizes="120x120" href="<%= image_path('apple-icon-120x120.png') %>">
+    <link rel="apple-touch-icon" sizes="144x144" href="<%= image_path('apple-icon-144x144.png') %>">
+    <link rel="apple-touch-icon" sizes="152x152" href="<%= image_path('apple-icon-152x152.png') %>">
+    <link rel="apple-touch-icon" sizes="180x180" href="<%= image_path('apple-icon-180x180.png') %>">
+    <link rel="icon" type="image/png" sizes="192x192"  href="<%= image_path('android-icon-192x192.png') %>">
+    <link rel="icon" type="image/png" sizes="32x32" href="<%= image_path('favicon-32x32.png') %>">
+    <link rel="icon" type="image/png" sizes="96x96" href="<%= image_path('favicon-96x96.png') %>">
+    <link rel="icon" type="image/png" sizes="16x16" href="<%= image_path('favicon-16x16.png') %>">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="<%= image_path('ms-icon-144x144.png') %>">
+    <meta name="theme-color" content="#ffffff">
+    
     <%= stylesheet_link_tag    'application', media: 'all' %>
   </head>
 
@@ -21,7 +44,19 @@
       <%= active_link_to posts_path(owner_id: current_user.id), class: "navbar-item", class_active: "is-active", active: :exact do %>
 	My videos
       <% end %>
-
+      <div class="navbar-item search-item">
+	<form action="/posts">
+	  <p class="control has-icons-left">
+	    <span class="icon is-small is-left">
+	      <i class="fa fa-search"></i>
+	    </span>
+	    <input class="input" type="text" placeholder="Find a video" name="tag" value="<%= params[:tag] %>">
+	    <button class="button">
+	      Search
+	    </button>
+	  </p>
+	</form>
+      </div>
       <div class="navbar-end">
 	<%= active_link_to(edit_user_registration_path, class: "navbar-item", class_active: "is-active") do %>
 	<%= current_user.username %>
@@ -53,9 +88,34 @@
     <% end %>
 
     <section class="section">
+
+      <% if @tags.present? %>
+      <div class="columns">
+	<div class="column is-2">
+	  <aside class="menu">
+	    <p class="menu-label">
+	      Popular tags
+	    </p>
+	    <ul class="menu-list">
+	      <% @tags.each do |tag| %>
+	      <li>
+		<%= link_to tag, posts_path(tag: tag), class: "link" %>
+	      </li>
+	      <% end %>
+	    </ul>
+	  </aside>
+	</div>
+	<div class="column is-10">
+	  <main class="container is-fullhd">
+	    <%= yield %>
+	  </main>
+	</div>
+      </div>
+      <% else %>
       <main class="container is-fullhd">
 	<%= yield %>
       </main>
+      <% end %>
     </section>
   </body>
 </html>

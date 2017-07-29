@@ -27,13 +27,32 @@
       <small class="likes-count"><%= post.cached_votes_up %></small>
     </div>
   </div>
+
   <div class="content">
     <p class="ellipsis">
       <% if post.title.present? %>
-      <%= post.title %>
+      <strong><%= post.title %></strong>
       <% else %>
       <em>No title</em>
       <% end %>
     </p>
+    
+    <% if full && post.description.present? %>
+    <%= format_text post.description %>
+    <% end %>
+
+    <% if full && policy(post).update? %>
+    <nav class="level">
+      <div class="level-left">
+	<div class="level-item">
+	  <%= link_to edit_post_path(post) do %>
+	  Edit
+	  <% end %>
+	</div>
+      </div>
+    </nav>
+    <% end %>
+      
   </div>
+
 </div>

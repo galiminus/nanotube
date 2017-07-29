@@ -1,6 +1,27 @@
+<% if @owner.present? %>
+<section class="section">
+  <article class="media">
+    <figure class="media-left">
+      <p class="image is-64x64">
+	<%= image_tag @owner.avatar_url, alt: @owner.username %>
+      </p>
+    </figure>
+    <div class="media-content">
+      <div class="content">
+	<p>
+	  <strong><%= @owner.username %></strong>
+	  <br>
+	  <%= @owner.biography %>
+	</p>
+      </div>
+    </div>
+  </article>
+</section>
+<% end %>
+
 <div class="columns is-multiline">
   <% @posts.each do |post| %>
-  <div class="column is-one-third">
+  <div class="column is-one-third" id="post-<%= post.id %>">
     <div class="card">
       <% if post.built? && post.thumbnail.present? %>
       <div class="card-image">
@@ -19,7 +40,7 @@
 	</figure>
       </div>
       <% end %>
-      <%= render partial: "posts/card_content", locals: { post: post } %>
+      <%= render partial: "posts/card_content", locals: { post: post, full: false } %>
     </div>
   </div>
   <% end %>

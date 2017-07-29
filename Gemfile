@@ -66,3 +66,6 @@ gem "carrierwave"
 gem "rmagick"
 gem "kaminari"
 gem "activeadmin"
+gem 'rails_autolink'
+gem 'acts-as-taggable-on', github: 'mbleigh/acts-as-taggable-on'
+

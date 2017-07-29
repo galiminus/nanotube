@@ -1,0 +1,37 @@
+<div class="columns">
+  <div class="column is-6 is-offset-3">
+    <%= form_for @post do |f| %>
+      <div class="card">
+	<%= error_messages_for(@post) %>
+	<div class="card-content">
+	  <div class="content">
+
+	    <div class="field">
+	      <%= f.label :title, class: "label" %>
+	      <div class="control">
+		<%= f.text_field :title, autofocus: true, class: "input" %>
+	      </div>
+	    </div>
+
+	    <div class="field">
+	      <%= f.label :description, class: "label" %>
+	      <div class="control">
+		<%= f.text_area :description, rows: 4, class: "textarea" %>
+	      </div>
+	      <p class="help">Include <a>#hashtags</a> to make your video easier to find.</p>
+	    </div>
+
+	  </div>
+	</div>
+	<footer class="card-footer">
+	  <p class="card-footer-item">
+	    <button type="submit" name="submit" class="button is-primary">
+	      <span>Save</span>
+	    </button>
+	  </p>
+	</footer>
+      </div>
+      <% end %>
+
+  </div>
+</div>

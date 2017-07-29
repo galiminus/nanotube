@@ -10,6 +10,7 @@ class UploadController < ApplicationController
                   md5: params.permit("file.md5")["file.md5"],
                   size: params.permit("file.size")["file.size"].to_i,
                   title: params.permit("title")["title"],
+                  description: params.permit("description")["description"],
                   owner: current_user
     })
 

@@ -15,11 +15,11 @@ class AvatarUploader < CarrierWave::Uploader::Base
   end
 
   version :normal do
-    process resize_to_fill: [128, 128]
+    process resize_to_fill: [64, 64]
   end
 
   def default_url(*args)
-    "http://bulma.io/images/placeholders/128x128.png"
+    ActionController::Base.helpers.image_path "default_avatar.png"
   end
   
   # Provide a default URL as a default if there hasn't been a file uploaded:

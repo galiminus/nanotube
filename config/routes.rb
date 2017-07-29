@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :posts do
     post :like
     post :unlike
+    resources :comments
   end
   resources :upload, only: [:create]
   

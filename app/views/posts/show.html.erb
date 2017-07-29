@@ -1,7 +1,52 @@
-<div class="columns">
-  <div class="column">
-    <video src="<%= video_path(@post) %>" controls="controls" autoplay="autoplay"></video>
+<video src="<%= video_path(@post) %>" controls="controls" autoplay="autoplay"></video>
 
-    <%= render partial: "posts/card_content", locals: { post: @post } %>
+<%= render partial: "posts/card_content", locals: { post: @post, full: true } %>
+
+<% @comments.order(created_at: :asc).each do |comment| %>
+<article class="media" id="comment-<%= comment.id %>">
+  <figure class="media-left">
+    <p class="image is-64x64">
+      <%= link_to posts_path(owner_id: comment.author_id) do %>
+      <%= image_tag comment.author.avatar_url, alt: comment.author.username %>
+      <% end %>
+    </p>
+  </figure>
+  <div class="media-content">
+    <div class="content">
+      <p class="is-marginless">
+	<%= link_to posts_path(owner_id: comment.author_id) do %>
+	<strong>
+	  <%= comment.author.username %>
+	</strong>
+	<% end %>
+      </p>
+      <%= format_text(comment.body) %>
+    </div>
   </div>
-</div>
+</article>
+<% end %>
+
+<article class="media">
+  <figure class="media-left">
+    <p class="image is-64x64">
+      <%= image_tag current_user.avatar_url, alt: current_user.username %>
+    </p>
+  </figure>
+  <div class="media-content">
+    <%= form_for [@post, @comment], class: "media" do |f| %>
+    <div class="field">
+      <p class="control">
+	<%= f.text_area :body, placeholder: "Add a comment...", class: "textarea" %>
+      </p>
+    </div>
+    <div class="field">
+      <p class="control">
+	<%= f.button type: "submit", class: "button" do %>
+	Post comment
+	<% end %>
+      </p>
+    </div>
+    <% end %>
+  </div>
+</article>
+

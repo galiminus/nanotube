@@ -19,4 +19,13 @@ module ApplicationHelper
   def thumbnail_path(post)
     ENV["PUBLIC_VIDEOS_PATH"] + "/" + post.thumbnail
   end
+
+  def format_text(text)
+    formatted_text = simple_format(hashtags_links(h(text)))
+    linked_text = auto_link(formatted_text, :html => { :target => '_blank', :rel => 'noopener', class: 'ellipsis' }).gsub("\n\n", '<br />').gsub("<p></p>", '').html_safe
+  end
+
+  def hashtags_links(text)
+    text.gsub(/#([[:alnum:]]+)/, link_to("/posts?tag=\\1") { "#\\1" }.html_safe)
+  end
 end

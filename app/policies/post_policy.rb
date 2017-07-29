@@ -5,11 +5,6 @@ class PostPolicy < ApplicationPolicy
     end
   end
 
-  def permitted_attributes
-    [
-    ]
-  end
-
   def index?
     true
   end
