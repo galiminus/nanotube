@@ -1,5 +1,4 @@
 class PostsController < ApplicationController
-  before_action :authenticate_user!
   before_action :load_post, except: [:index, :new]
   before_action :set_comment, only: [:show]
   before_action :load_tags, only: [:index, :show]

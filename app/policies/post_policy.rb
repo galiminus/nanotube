@@ -1,20 +1,24 @@
 class PostPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      scope.where("(posts.owner_id = ? OR posts.state = ?)", user.id, "built")
+      if user.present?
+        scope.where("(posts.owner_id = ? OR posts.state = ?)", user.id, "built")
+      else
+        scope.where(state: "built")
+      end
     end
   end
 
   def index?
-    true
+    user.present? || Rails.configuration.are_videos_public
   end
 
   def show?
-    record.built? || user == record.owner
+    (user.present? || Rails.configuration.are_videos_public) && (record.built? || user == record.owner)
   end
 
   def new?
-    user == record.owner
+    user.present? && user == record.owner
   end
 
   def create?

@@ -27,15 +27,34 @@
       <div class="card-image">
 	<figure class="image is-4by3">
 	  <%= link_to post do %>
-	  <img src="<%= thumbnail_path(post) %>" alt="Image">
+	  <img src="<%= thumbnail_path(post) %>" alt="<%= post.title %>">
 	  <% end %>
 	</figure>
       </div>
-      <% else %>
+      <% elsif post.enqueued? || post.building? %>
       <div class="card-image">
 	<figure class="image is-4by3">
 	  <%= link_to post do %>
-	  <%= image_tag "waiting_transcoding.png", alt: "Waiting transcoding" %>
+	  <div class="image-container">
+	    <div class="circular-container">
+	      <div class="circle circular-loader1">
+		<div class="circle circular-loader2">
+		</div>
+	      </div>
+	    </div>
+	  </div>
+	  <% end %>
+	</figure>
+      </div>
+      <% elsif post.build_failed? %>
+      <div class="card-image">
+	<figure class="image is-4by3">
+	  <%= link_to post do %>
+	  <div class="image-container">
+	    <span class="icon is-large">
+	      <i class="fa fa-exclamation-circle"></i>
+	    </span>
+	  </div>
 	  <% end %>
 	</figure>
       </div>

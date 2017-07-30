@@ -31,18 +31,20 @@
   </head>
 
   <body>
-    <% if user_signed_in? %>
+    <% if user_signed_in? || Rails.configuration.are_videos_public %>
     <nav class="navbar">
-      <%= active_link_to posts_path, class: "navbar-item", class_active: "is-active", active: :exact do %>
+      <%= active_link_to root_path, class: "navbar-item", class_active: "is-active", active: :exact do %>
 	Last videos
       <% end %>
 
       <%= active_link_to posts_path(sort: :likes), class: "navbar-item", class_active: "is-active", active: :exact do %>
 	Best rated
       <% end %>
-      
+
+      <% if user_signed_in? %>
       <%= active_link_to posts_path(owner_id: current_user.id), class: "navbar-item", class_active: "is-active", active: :exact do %>
 	My videos
+      <% end %>
       <% end %>
       <div class="navbar-item search-item">
 	<form action="/posts">
@@ -57,6 +59,8 @@
 	  </p>
 	</form>
       </div>
+
+      <% if user_signed_in? %>
       <div class="navbar-end">
 	<%= active_link_to(edit_user_registration_path, class: "navbar-item", class_active: "is-active") do %>
 	<%= current_user.username %>
@@ -73,6 +77,18 @@
 	  </p>
 	</div>
       </div>
+      <% else %>
+      <%= active_link_to new_user_session_path, class: "navbar-item", class_active: "is-active", active: :exact do %>
+      Sign in
+      <% end %>
+      	<div class="navbar-item">
+	  <p class="control">
+	    <%= active_link_to new_user_registration_path, class: "button is-primary", class_active: "is-active" do %>
+	    <span>Sign up</span>
+	    <% end %>
+	  </p>
+	</div>
+      <% end %>
     </nav>
     <% end %>
 

@@ -1,4 +1,15 @@
+<% if @post.built? %>
 <video src="<%= video_path(@post) %>" controls="controls" autoplay="autoplay"></video>
+<% elsif @post.enqueued? || @post.building? %>
+<div class="notification is-primary">
+Your video is currently being processed.
+</div>
+<% elsif @post.build_failed? %>
+<div class="notification is-danger">
+  There was an error with your video.
+</div>
+<% end %>
+
 
 <%= render partial: "posts/card_content", locals: { post: @post, full: true } %>
 
@@ -26,6 +37,7 @@
 </article>
 <% end %>
 
+<% if user_signed_in? %>
 <article class="media">
   <figure class="media-left">
     <p class="image is-64x64">
@@ -49,4 +61,4 @@
     <% end %>
   </div>
 </article>
-
+<% end %>
